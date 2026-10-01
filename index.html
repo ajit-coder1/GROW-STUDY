@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GROWXAJIT - Panda Premium</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+:root{--bg:#050505;--card:rgba(20,22,30,.6);--pill:rgba(25,27,35,.72);--text:#fff;--muted:#94a3b8;--accent:#0ea5e9;--accentSoft:rgba(14,165,233,.18)}
+html[data-theme="light"]{--bg:#f8fafc;--card:rgba(255,255,255,.6);--pill:rgba(255,255,255,.88);--text:#0f172a;--muted:#475569}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background-color:var(--bg);background-image:radial-gradient(circle at top,var(--accentSoft),transparent 45%);background-repeat:no-repeat;background-attachment:fixed;color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* PREMIUM GLASSMORPHISM & SHADOWS */
+.card, .sec, .status, .footer, .tool, .mode {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card,.tool,.btn-icon,.btn-open,.btn-lg,.c-dot,.t-btn,.btn-add,.btn-act,.btn-lofi,.lofi-small-btn{transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease}
+.card:active,.tool:active,.btn-icon:active,.btn-open:active,.btn-lg:active,.c-dot:active,.t-btn:active,.btn-add:active,.btn-act:active,.btn-lofi:active,.lofi-small-btn:active{transform:scale(.95);opacity:.9; box-shadow: 0 0 20px var(--accentSoft);}
+.wrap{max-width:480px;margin:0 auto;padding:22px 16px 80px;position:relative;z-index:10}
+.flex{display:flex;align-items:center;justify-content:space-between}
+
+/* PANDA VIBE ANIMATION - MOTION IN CENTER */
+.floating-panda { font-size: 38px; animation: float 3s ease-in-out infinite; display:inline-block; }
+@keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px) rotate(5deg); } 100% { transform: translateY(0px); } }
+
+.brand{font-size:24px;font-weight:900;background:linear-gradient(135deg,var(--text) 20%,var(--accent) 100%);-webkit-background-clip:text;color:transparent;}
+.pill-box{display:flex;gap:6px;padding:4px;border-radius:99px;background:var(--pill);border:1px solid rgba(255,255,255,.08)}
+.btn-icon{width:36px;height:36px;border:none;border-radius:50%;background:0 0;color:var(--muted);display:grid;place-items:center;cursor:pointer}
+.btn-icon.active{background:var(--accent);color:#fff; box-shadow: 0 0 10px var(--accentSoft);}
+.hero{text-align:center;margin:10px 0 20px}
+.badge{background:var(--pill);border:1px solid rgba(255,255,255,.1);color:var(--accent);padding:6px 16px;border-radius:99px;font-size:10px;letter-spacing:3px;font-weight:800;display:inline-block;margin-bottom:10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);}
+h1{font-size:42px;line-height:1;font-weight:900;letter-spacing:-1.5px;background:linear-gradient(135deg,var(--text) 25%,var(--accent) 100%);-webkit-background-clip:text;color:transparent; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.2));}
+.sub{font-size:11px;letter-spacing:4px;color:var(--muted);font-weight:700;margin-top:5px}
+.colors{background:var(--pill);border:1px solid rgba(255,255,255,.08);padding:12px;border-radius:99px;display:flex;gap:14px;justify-content:center;margin-bottom:18px}
+.c-dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent; transition: all 0.3s ease;}
+.c-dot.active{transform:scale(1.2);border-color:#fff;box-shadow:0 0 15px currentColor}
+.status{background:var(--pill);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:14px;text-align:center;font-size:14px;font-weight:700;margin-bottom:12px}
+.mini-box{flex:1;background:var(--pill);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:12px 10px;font-size:12px;font-weight:700;text-align:center}
+.mini-box span{color:var(--accent)} .mini-box .gold{color:#fbbf24; text-shadow: 0 0 8px rgba(251,191,36,0.4);}
+.list{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:22px;padding:15px;display:flex;align-items:center;gap:14px;cursor:pointer}
+.card.active{border-color:var(--accent);box-shadow:0 0 0 1px rgba(168,85,247,.12), 0 8px 32px 0 var(--accentSoft);}
+
+/* LOGO FIX: Full cover */
+.c-ic{width:50px;height:50px;border-radius:16px;background:rgba(255,255,255,.05);display:grid;place-items:center;color:#fb923c;font-size:20px;overflow:hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.15);}
+.c-ic img {width:100%;height:100%;object-fit:cover;border-radius:16px;}
+.c-txt{flex:1}.c-tit{font-size:16px;font-weight:800}.c-des{font-size:12px;color:var(--muted)}
+.c-arr{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.06);display:grid;place-items:center;color:var(--muted); transition: all 0.3s ease;}
+.card:active .c-arr { background:var(--accent); color:#fff; transform: translateX(5px); }
+
+.sec{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:24px;padding:14px;margin-bottom:12px}
+.s-tit{font-size:12px;font-weight:800;letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{padding:14px 12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.mode.on{border-color:var(--accent);background:rgba(14,165,233,.05)} .m-ic{width:40px;height:40px;border-radius:14px;background:var(--accentSoft);color:var(--accent);display:grid;place-items:center;margin-right:10px}
+.dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.12)} .mode.on .dot{background:#22c55e;box-shadow:0 0 10px #22c55e}
+.tool{min-height:92px;border-radius:20px;padding:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;justify-content:space-between;cursor:pointer}
+.tool-ic{width:38px;height:38px;border-radius:14px;background:rgba(255,255,255,.05);color:var(--accent);display:grid;place-items:center}
+.footer{margin-top:18px;background:var(--pill);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:14px 16px;text-align:center;font-size:11px;font-weight:800;color:var(--muted);letter-spacing:1.2px}
+.footer span{color:var(--accent);font-size:14px}
+.view{display:none;width:100%;min-height:100vh;animation:fadeIn .3s ease-out}
+.view.active{display:block}
+@keyframes fadeIn{from{opacity:0; transform:translateY(10px);}to{opacity:1; transform:translateY(0);}}
+
+/* ======= CODED LAMBORGHINI SPLASH SCREEN CSS ======= */
+.splash-overlay {
+  position: fixed; inset: 0; z-index: 99999;
+  background-color: #050505;
+  background-image: radial-gradient(circle at center, rgba(234,179,8,0.15), transparent 80%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+  overflow: hidden;
+}
+.splash-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.luxury-car-coded { width: 340px; height: auto; margin-bottom: 25px; animation: glideCar 1.5s ease-in-out forwards; }
+.splash-logo { font-size: 40px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #fff 20%, #eab308 100%); -webkit-background-clip: text; color: transparent; opacity: 0; animation: popLogo 0.5s ease-out forwards 0.2s; text-align: center; }
+.splash-dev { margin-top: 15px; font-size: 13px; font-weight: 800; letter-spacing: 4px; color: #fbbf24; opacity: 0; animation: fadeInText 0.5s ease-out forwards 0.4s; text-transform: uppercase; text-shadow: 0 0 10px rgba(251,191,36,0.3); }
+@keyframes glideCar { 0% { transform: translateX(-80vw); opacity: 0; } 25% { transform: translateX(-5vw); opacity: 1; } 75% { transform: translateX(5vw); opacity: 1; } 100% { transform: translateX(80vw); opacity: 0; } }
+@keyframes popLogo { 0% { transform: scale(0.8); opacity: 0; filter: blur(5px); } 100% { transform: scale(1); opacity: 1; filter: blur(0); } }
+@keyframes fadeInText { to { opacity: 1; } }
+
+/* PREMIUM TIMER CSS START */
+.t-wrap{position:relative;width:250px;height:250px;margin:35px auto;display:flex;align-items:center;justify-content:center}
+.t-ring-outer{position:absolute;top:-12px;left:-12px;right:-12px;bottom:-12px;border-radius:50%;border:2px dashed rgba(255,255,255,.05);z-index:1;transition:all .3s}
+.t-ring-inner{position:absolute;top:10px;left:10px;right:10px;bottom:10px;border-radius:50%;background:radial-gradient(circle at center,rgba(255,255,255,.02) 0%,transparent 70%);box-shadow:inset 0 0 20px rgba(0,0,0,.3);z-index:1}
+@keyframes spinSlow{100%{transform:rotate(360deg)}}
+@keyframes pulseGlow{0%,100%{filter:drop-shadow(0 0 10px var(--accent)) drop-shadow(0 0 5px var(--accentSoft))}50%{filter:drop-shadow(0 0 25px var(--accent)) drop-shadow(0 0 10px var(--accentSoft))}}
+.is-running .t-ring-outer{animation:spinSlow 15s linear infinite;border-color:var(--accentSoft)}
+.is-running .t-pr{animation:pulseGlow 2s ease-in-out infinite}
+.is-running .t-txt{transform:scale(1.05)}
+.t-svg{position:absolute;top:0;left:0;width:100%;height:100%;transform:rotate(-90deg);z-index:2;overflow:visible}
+.t-bg{fill:none;stroke:var(--pill);stroke-width:8}
+.t-pr{fill:none;stroke:var(--accent);stroke-width:12;stroke-linecap:round;stroke-dasharray:722;transition:stroke-dashoffset 1s linear,stroke .5s ease;filter:drop-shadow(0 0 8px var(--accentSoft))}
+.t-txt{font-size:56px;font-weight:900;background:linear-gradient(135deg,var(--text) 20%,var(--accent) 100%);-webkit-background-clip:text;color:transparent;z-index:3;font-variant-numeric:tabular-nums;transition:all .3s ease}
+/* PREMIUM TIMER CSS END */
+
+.t-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.t-btn{background:var(--pill);border:1px solid rgba(255,255,255,.08);color:var(--muted);padding:14px 0;border-radius:16px;font-size:15px;font-weight:800;cursor:pointer}
+.t-btn.active{background:var(--accentSoft);color:var(--accent);border-color:var(--accent)}
+.t-ctrl{display:flex;gap:12px}
+.btn-lg{flex:1;padding:16px;border-radius:20px;border:none;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-start{background:var(--accent);color:#fff; box-shadow: 0 8px 20px var(--accentSoft);}.btn-rst{background:var(--pill);color:var(--text);border:1px solid rgba(255,255,255,.08)}
+.srv-head{text-align:center;margin:40px 0 50px}
+.srv-tit{font-size:38px;font-weight:900;line-height:1.1;letter-spacing:1px;text-transform:uppercase}
+.srv-sub{font-size:14px;color:var(--muted);font-style:italic;margin-top:10px}
+.srv-card{background:rgba(18,20,28,.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius:28px;padding:35px 20px;text-align:center;border-top:4px solid var(--accent);box-shadow:0 15px 40px rgba(0,0,0,.6);position:relative;overflow:hidden}
+.srv-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at top,var(--accentSoft),transparent 50%);pointer-events:none}
+.srv-rock{font-size:55px;margin-bottom:15px;position:relative;z-index:1;filter:drop-shadow(0 4px 10px rgba(0,0,0,.3))}
+.sc-tit{color:#10b981;font-size:24px;font-weight:900;letter-spacing:1px;margin-bottom:12px;position:relative;z-index:1}
+.sc-des{color:#cbd5e1;font-size:14px;line-height:1.5;margin-bottom:30px;position:relative;z-index:1}
+.sc-row{display:flex;justify-content:center;gap:12px;margin-bottom:35px;position:relative;z-index:1;flex-wrap:wrap}
+.sc-pill{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:10px 20px;border-radius:14px;font-size:13px;font-weight:700;color:#fff}
+.btn-open{width:100%;padding:20px;border:none;border-radius:16px;background:var(--accent);color:#fff;font-size:16px;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 25px var(--accentSoft);position:relative;z-index:1}
+.lofi-controls{display:flex;justify-content:center;align-items:center;gap:14px}
+.btn-lofi{width:58px;height:58px;border:none;border-radius:18px;background:var(--pill);color:var(--text);font-size:18px;cursor:pointer;display:grid;place-items:center;border:1px solid rgba(255,255,255,.08)}
+.btn-lofi-play{width:70px;height:70px;background:var(--accent);color:#fff;box-shadow:0 8px 25px var(--accentSoft)}
+.lofi-bar{width:100%;height:10px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;cursor:pointer}
+.lofi-fill{width:0;height:100%;background:var(--accent);border-radius:99px}
+.lofi-track{background:var(--pill);border:1px solid rgba(255,255,255,.06);padding:14px;border-radius:18px;display:flex;justify-content:space-between;align-items:center;transition:opacity .3s;gap:12px}
+.lofi-track.active{border-color:var(--accent);background:rgba(255,255,255,.06)}
+.lofi-track-info{flex:1;padding-right:10px}
+.lofi-track-title{font-size:15px;font-weight:800;margin-bottom:4px;word-break:break-word;white-space:pre-wrap;line-height:1.5}
+.lofi-track-sub{font-size:12px;color:var(--accent);font-weight:600}
+.lofi-small-btn{width:36px;height:36px;border:none;border-radius:12px;background:var(--pill);color:var(--text);cursor:pointer}
+.lofi-list{display:flex;flex-direction:column;gap:12px}
+.t-inp,textarea{width:100%;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text);font-size:14px;outline:none;resize:none}
+.t-inp:focus,textarea:focus{border-color:var(--accent);background:rgba(255,255,255,.08)}
+.btn-add{width:100%;padding:14px 16px;border:none;border-radius:14px;background:var(--accent);color:#fff;font-size:14px;font-weight:800;cursor:pointer;margin-top:10px}
+.task-list,.notes-list{display:flex;flex-direction:column;gap:10px}
+.task-item,.note-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.t-name,.note-title{font-weight:800;font-size:15px;word-break:break-word}
+.t-time,.note-text,.note-meta,.c-des{font-size:12px;color:var(--muted)}
+.t-actions,.note-actions{display:flex;gap:8px}
+.btn-act{border:none;color:#fff;border-radius:12px;padding:10px 12px;cursor:pointer}
+.btn-del{background:#ef4444}
+.note-head{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.note-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;background:rgba(255,255,255,.06);font-size:11px;font-weight:700}
+.note-color-dot{width:8px;height:8px;border-radius:50%}
+.empty-msg{color:var(--muted);font-size:13px;text-align:center;padding:16px 0;line-height:1.6}
+</style>
+</head>
+<body>
+
+<div id="splash-screen" class="splash-overlay">
+  <svg class="luxury-car-coded" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fde047"/>
+        <stop offset="40%" stop-color="#eab308"/>
+        <stop offset="100%" stop-color="#ca8a04"/>
+      </linearGradient>
+      <linearGradient id="glassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#334155"/>
+        <stop offset="100%" stop-color="#0f172a"/>
+      </linearGradient>
+    </defs>
+    <ellipse cx="400" cy="265" rx="350" ry="15" fill="rgba(234, 179, 8, 0.4)" filter="blur(12px)"/>
+    <circle cx="180" cy="220" r="45" fill="#0f0f0f"/><circle cx="180" cy="220" r="30" fill="#222" stroke="#555" stroke-width="3"/><circle cx="180" cy="220" r="10" fill="#eab308"/>
+    <circle cx="630" cy="220" r="45" fill="#0f0f0f"/><circle cx="630" cy="220" r="30" fill="#222" stroke="#555" stroke-width="3"/><circle cx="630" cy="220" r="10" fill="#eab308"/>
+    <path d="M 40,160 C 30,130 50,120 90,115 C 150,105 240,70 320,50 C 420,25 500,35 580,70 L 720,120 C 770,135 790,160 780,190 L 760,230 L 690,230 A 55,55 0 0,0 570,230 L 240,230 A 55,55 0 0,0 120,230 L 30,230 Z" fill="url(#bodyGrad)"/>
+    <path d="M 30,230 L 120,230 A 55,55 0 0,1 240,230 L 570,230 A 55,55 0 0,1 690,230 L 760,230 L 750,240 L 30,240 Z" fill="#050505"/>
+    <path d="M 300,100 C 370,55 460,45 520,65 L 560,105 L 340,115 Z" fill="url(#glassGrad)"/>
+    <path d="M 340,115 L 560,105 L 550,115 L 340,125 Z" fill="#1e293b"/>
+    <path d="M 190,150 L 310,130 L 330,190 L 230,200 Z" fill="#0f0f0f"/><path d="M 230,200 L 330,190 L 320,200 L 230,210 Z" fill="#111"/>
+    <polygon points="700,125 760,140 730,150 690,135" fill="#fff" filter="drop-shadow(0 0 15px #fff)"/>
+    <polygon points="35,140 65,130 55,150" fill="#ef4444" filter="drop-shadow(0 0 15px #ef4444)"/>
+    <path d="M 90,115 C 150,105 240,70 320,50 C 420,25 500,35 580,70 L 720,120" stroke="rgba(255,255,255,0.4)" stroke-width="4" fill="none"/>
+    <path d="M 100,140 L 290,130" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none"/>
+    <path d="M 510,120 L 690,150" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none"/>
+  </svg>
+  <div class="splash-logo">GROWXAJIT</div>
+  <div class="splash-dev">DEVELOPED BY AJIT SAHANI</div>
+</div>
+
+<!-- ================= HOME SCREEN ================= -->
+<div id="view-home" class="view active">
+  <div class="wrap">
+    <div class="flex top">
+      <div class="brand">GROWXAJIT</div>
+      <div class="floating-panda">🐼</div>
+      <div class="pill-box">
+        <button class="btn-icon active top-dark" onclick="changeTheme('dark')"><i class="fa-solid fa-moon"></i></button>
+        <button class="btn-icon top-light" onclick="changeTheme('light')"><i class="fa-solid fa-sun"></i></button>
+      </div>
+    </div>
+    
+    <div class="hero">
+      <div class="badge">|| ज य श्री R A M ||</div>
+      <h1>GROWXAJIT</h1>
+      <div class="sub">SELECT AESTHETICS COLOR</div>
+    </div>
+    <div class="colors">
+      <div class="c-dot active" style="background:#0ea5e9" onclick="changeColor('#0ea5e9', this)"></div>
+      <div class="c-dot" style="background:#f43f5e" onclick="changeColor('#f43f5e', this)"></div>
+      <div class="c-dot" style="background:#a855f7" onclick="changeColor('#a855f7', this)"></div>
+      <div class="c-dot" style="background:#22c55e" onclick="changeColor('#22c55e', this)"></div>
+      <div class="c-dot" style="background:#fb7185" onclick="changeColor('#fb7185', this)"></div>
+    </div>
+    
+    <div class="status">Ready to study, Panda Scholar 🐼</div>
+    
+    <div class="flex" style="gap:12px;margin-bottom:18px">
+      <div class="mini-box">Welcome, <span>Student</span></div>
+      <div class="mini-box">Access <span class="gold">Unlocked</span></div>
+    </div>
+    
+    <div class="list">
+      <!-- Old 13 Platforms -->
+      <div class="card" onclick="selectInstitute('link-pw-prime')">
+        <div class="c-ic"><img src="https://cdn.phototourl.com/free/2026-08-13-f95c5a3d-90f5-4005-90e0-a3ad9f04d739.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">PW Prime</div><div class="c-des">Exclusive 4K premium lectures.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-pw-node2')">
+        <div class="c-ic"><img src="https://cdn.phototourl.com/free/2026-08-13-f95c5a3d-90f5-4005-90e0-a3ad9f04d739.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">PW Node 2</div><div class="c-des">High-speed processing server.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-pw-nexus')">
+        <div class="c-ic"><img src="https://cdn.phototourl.com/free/2026-08-13-f95c5a3d-90f5-4005-90e0-a3ad9f04d739.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">PW Nexus</div><div class="c-des">Direct secure encrypted route.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-next-topper')">
+        <div class="c-ic"><img src="https://cdn.phototourl.com/free/2026-08-13-cb0eea55-2047-402e-9095-1cc948f84902.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">Next Topper</div><div class="c-des">Original premium batches path.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-kgs-portal')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786640584015_63c0cb41_1000051155.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">KGS Portal</div><div class="c-des">Khan Global Studies elite prep.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-unacademy')">
+        <div class="c-ic"><img src="https://cdn.phototourl.com/free/2026-08-13-9db4d938-4ea0-4adf-8644-0557dccdfe31.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">Unacademy</div><div class="c-des">Full syllabus structured batches.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-vidyakul')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786641229316_5d705f0d_1000051160.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">Vidyakul</div><div class="c-des">Interactive live masterclasses.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-rwa-squad')">
+        <div class="c-ic"><img src="https://cdn.phototourl.com/free/2026-08-13-920e8ac7-f90c-4519-9add-3f163c76d590.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">RWA Squad</div><div class="c-des">Rojgar With Ankit premium access.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-study-iq')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786641011853_7d9e2257_1000051158.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">Study IQ</div><div class="c-des">Elite current affairs & UPSC.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-mission-jeet')">
+        <div class="c-ic"><img src="https://cdn.phototourl.com/free/2026-08-13-96f85229-d960-425e-a9b4-03ea800e46ee.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">Mission Jeet</div><div class="c-des">High-speed delivery ecosystem.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-selection-next')">
+        <div class="c-ic"><img src="https://cdn.phototourl.com/free/2026-08-13-b639934f-caf3-4825-9116-e5d40a460e05.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">Selection Next</div><div class="c-des">Cinematic deep study interface.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-careerwill')">
+        <div class="c-ic"><img src="https://cdn.phototourl.com/free/2026-08-13-82f39cf4-71ba-434b-8354-7700e4223663.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">Careerwill</div><div class="c-des">Careerwill premium access lane.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-science-fun')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786640901098_5bde0574_1000051156.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">Science and Fun</div><div class="c-des">Science and Fun smart route.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+
+      <!-- New 12 Platforms -->
+      <div class="card" onclick="selectInstitute('link-gyan-bindu')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786688025778_ac11b131_1000051228.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">GYAN BINDU</div><div class="c-des">Premium test series & batches.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-aash')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786688198408_0062a6d2_1000051238.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">AASH OFFICIAL</div><div class="c-des">Official learning portal.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-winning')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786688219066_c4a97cc2_1000051239.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">WINNER INSTITUTE</div><div class="c-des">Top tier guidance.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-farmar')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786688247165_fdb9b3ff_1000051240.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">PARMAR ACADEMY</div><div class="c-des">Elite farming & agriculture prep.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-lakshya')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786688274192_a55900f6_1000051241.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">LAKSHYA CLASSES</div><div class="c-des">Target focused studies.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-samyak')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786688312613_e26c670b_1000051242.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">SAMYAK IAS</div><div class="c-des">Premium UPSC & PCS preparation.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-kautilya')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786688344582_fd88f8c0_1000051243.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">KAUTILYA CLASSES</div><div class="c-des">Specialized competitive exams.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-apna')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786688383427_53c200f5_1000051244.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">APNA COLLEGE</div><div class="c-des">Coding & placement prep.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-alpha')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786688068855_20ccdd69_1000051234.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">ALPHA INSTITUTE</div><div class="c-des">Board & competitive excellence.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-jobs')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786688785828_1a8c2af3_1000051245.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">JOBS TARGET</div><div class="c-des">Direct recruitment batches.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-cds')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786688831150_4511f2ae_1000051246.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">CDS JOURNEY</div><div class="c-des">Defence & CDS elite prep.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="selectInstitute('link-textbook')">
+        <div class="c-ic"><img src="https://xrmvmgtcgjjhljcmnhsn.supabase.co/storage/v1/object/public/images/1786688173092_a40358ec_1000051237.png" alt="logo"></div>
+        <div class="c-txt"><div class="c-tit">TEXTBOOK</div><div class="c-des">Mock tests & live passes.</div></div><div class="c-arr"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+    </div>
+
+    <div class="footer">ENGINEERED WITH 💙 BY <span>A</span></div>
+  </div>
+</div>
+
+<!-- ================= TOOLS SCREEN ================= -->
+<div id="view-tools" class="view">
+  <div class="wrap">
+    <div class="flex top">
+      <button class="btn-icon" onclick="goToPage('view-home')" style="border:1px solid rgba(255,255,255,0.1)"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="brand" style="font-size:20px; color:var(--text);">Tools</div>
+      <!-- Center me bada floating Panda -->
+      <div class="floating-panda">🐼</div>
+      <div class="pill-box">
+        <button class="btn-icon active top-dark" onclick="changeTheme('dark')"><i class="fa-solid fa-moon"></i></button>
+        <button class="btn-icon top-light" onclick="changeTheme('light')"><i class="fa-solid fa-sun"></i></button>
+      </div>
+    </div>
+
+    <div class="sec" style="margin-top:20px;">
+      <div class="s-tit">THEME MODE</div>
+      <div class="grid2">
+        <div class="mode top-dark active on" onclick="changeTheme('dark')">
+          <div class="flex" style="gap:10px;">
+            <div class="m-ic"><i class="fa-solid fa-moon"></i></div>
+            <div>
+              <div class="c-tit" style="font-size:14px">Dark</div>
+              <div class="c-des">Focus look</div>
+            </div>
+          </div>
+          <div class="dot" id="dark-dot"></div>
+        </div>
+        <div class="mode top-light" onclick="changeTheme('light')">
+          <div class="flex" style="gap:10px;">
+            <div class="m-ic" style="color:var(--text); background:transparent;"><i class="fa-solid fa-sun"></i></div>
+            <div>
+              <div class="c-tit" style="font-size:14px">Light</div>
+              <div class="c-des">Clean look</div>
+            </div>
+          </div>
+          <div class="dot" id="light-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="s-tit">STUDY TOOLS</div>
+      <div class="grid2">
+        <div class="tool" onclick="goToPage('view-batchee')">
+          <div class="flex">
+            <div class="tool-ic"><i class="fa-solid fa-graduation-cap"></i></div>
+          </div>
+          <div class="c-tit" style="font-size:14px">BATCHES</div>
+          <div class="c-des">Premium hub</div>
+        </div>
+        <div class="tool" onclick="goToPage('view-focus')">
+          <div class="flex">
+            <div class="tool-ic"><i class="fa-solid fa-bullseye"></i></div>
+          </div>
+          <div class="c-tit" style="font-size:14px">Focus</div>
+          <div class="c-des">Deep study</div>
+        </div>
+        <div class="tool" onclick="goToPage('view-tasks')">
+          <div class="flex">
+            <div class="tool-ic"><i class="fa-solid fa-square-check"></i></div>
+          </div>
+          <div class="c-tit" style="font-size:14px">Tasks</div>
+          <div class="c-des">Task tracker</div>
+        </div>
+        <div class="tool" onclick="goToPage('view-notes')">
+          <div class="flex">
+            <div class="tool-ic"><i class="fa-solid fa-note-sticky"></i></div>
+          </div>
+          <div class="c-tit" style="font-size:14px">Notes</div>
+          <div class="c-des">Quick notes</div>
+        </div>
+        <div class="tool" onclick="goToPage('view-lofi')">
+          <div class="flex">
+            <div class="tool-ic"><i class="fa-solid fa-music"></i></div>
+          </div>
+          <div class="c-tit" style="font-size:14px">Lofi</div>
+          <div class="c-des">Premium music</div>
+        </div>
+        <div class="tool" onclick="goToPage('view-ai-doubt')">
+          <div class="flex">
+            <div class="tool-ic"><i class="fa-solid fa-robot"></i></div>
+          </div>
+          <div class="c-tit" style="font-size:14px">AI Doubt</div>
+          <div class="c-des">Instant help lane</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="s-tit">SERVICES</div>
+      <div class="grid2">
+        <div class="tool" onclick="openTelegram()">
+          <div class="flex">
+            <div class="tool-ic" style="color: #3b82f6; background: rgba(59, 130, 246, 0.1);"><i class="fa-brands fa-telegram"></i></div>
+          </div>
+          <div class="c-tit" style="font-size:14px">Telegram</div>
+          <div class="c-des">Join our channel</div>
+        </div>
+        <div class="tool" onclick="openYoutube()">
+          <div class="flex">
+            <div class="tool-ic" style="color: #ef4444; background: rgba(239, 68, 68, 0.1);"><i class="fa-brands fa-youtube"></i></div>
+          </div>
+          <div class="c-tit" style="font-size:14px">YouTube</div>
+          <div class="c-des">Watch tutorials</div>
+        </div>
+        <div class="tool" onclick="openInstagram()">
+          <div class="flex">
+            <div class="tool-ic" style="color: #ec4899; background: rgba(236, 72, 153, 0.1);"><i class="fa-brands fa-instagram"></i></div>
+          </div>
+          <div class="c-tit" style="font-size:14px">Instagram</div>
+          <div class="c-des">Follow for updates</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= FOCUS SCREEN ================= -->
+<div id="view-focus" class="view">
+  <div class="wrap">
+    <div class="flex top">
+      <button class="btn-icon" onclick="goToPage('view-tools')" style="border:1px solid rgba(255,255,255,0.1)"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="brand" style="font-size:20px">Deep Focus</div>
+      <div style="width:36px"></div>
+    </div>
+    
+    <div class="t-wrap" id="timer-wrap">
+      <div class="t-ring-outer"></div>
+      <div class="t-ring-inner"></div>
+      <svg class="t-svg" viewBox="0 0 250 250">
+        <circle class="t-bg" cx="125" cy="125" r="115"/>
+        <circle class="t-pr" id="t-pr" cx="125" cy="125" r="115"/>
+      </svg>
+      <div class="t-txt" id="t-txt">25:00</div>
+    </div>
+
+    <div class="t-btns">
+      <button class="t-btn active" id="btn-25" onclick="setupTimer(25,'btn-25')">25m</button>
+      <button class="t-btn" id="btn-45" onclick="setupTimer(45,'btn-45')">45m</button>
+      <button class="t-btn" id="btn-60" onclick="setupTimer(60,'btn-60')">60m</button>
+      <button class="t-btn" id="btn-90" onclick="setupTimer(90,'btn-90')">90m</button>
+    </div>
+    <div class="t-ctrl" style="margin-top:10px">
+      <button class="btn-lg btn-rst" onclick="resetTimer()"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+      <button class="btn-lg btn-start" id="s-btn" onclick="toggleTimer()"><i class="fa-solid fa-play"></i> Start</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= BATCHES/SERVER SCREEN ================= -->
+<div id="view-batchee" class="view">
+  <div class="wrap">
+    <div class="flex top">
+      <button class="btn-icon" onclick="goToPage('view-tools')" style="border:1px solid rgba(255,255,255,0.1)"><i class="fa-solid fa-arrow-left"></i></button>
+      <div style="width:36px"></div>
+    </div>
+    <div class="srv-head">
+      <div class="srv-tit">SERVER<br><span style="color: var(--accent);">ACCESS.</span></div>
+      <div class="srv-sub">Verify your access key to enter.</div>
+    </div>
+    <div class="srv-card">
+      <div class="srv-rock" id="lock-icon">🔒</div>
+      <div class="sc-tit" id="lock-title">SERVER LOCKED</div>
+      <div class="sc-des" id="lock-desc">Generate and enter the key to unlock this server for 24 hours, or use a Premium Key for lifetime access.</div>
+      <div class="sc-row">
+        <div class="sc-pill"><span style="color: var(--accent);">Status:</span> <span id="key-status-text" style="color:#ef4444; font-weight: 900;">LOCKED</span></div>
+        <div class="sc-pill"><span style="color: var(--accent);">Expiry:</span> <span id="key-expiry-text">N/A</span></div>
+      </div>
+
+      <div id="key-input-area">
+        <input type="text" id="access-key-input" class="t-inp" placeholder="Enter 24h Access Key..." style="margin-bottom: 12px; text-align: center; font-weight: 800; letter-spacing: 2px;">
+        <button class="btn-open" onclick="verifyKey()" style="margin-bottom: 12px;">VERIFY 24H KEY</button>
+        
+        <div class="grid2" style="gap:12px; margin-bottom: 20px;">
+          <button class="t-btn" style="color:#10b981; border-color:rgba(16,185,129,0.3); padding:10px 0; font-size:13px;" onclick="openGenerateKey()">Generate Key</button>
+          <button class="t-btn" style="color:#3b82f6; border-color:rgba(59,130,246,0.3); padding:10px 0; font-size:13px;" onclick="openVideoLink()">How to Use?</button>
+        </div>
+        
+        <div style="text-align:center; color:var(--muted); font-size:12px; margin-bottom:15px; font-weight: 700;">— OR PREMIUM —</div>
+        
+        <input type="text" id="premium-key-input" class="t-inp" placeholder="Enter Lifetime Premium Key..." style="margin-bottom: 12px; text-align: center; font-weight: 800; letter-spacing: 2px; border: 1px solid rgba(245, 158, 11, 0.4);">
+        <button class="btn-open" onclick="verifyPremiumKey()" style="margin-bottom: 12px; background: #f59e0b; box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3); color: #fff;">
+          <i class="fa-solid fa-crown"></i> VERIFY LIFETIME KEY
+        </button>
+
+        <div class="grid2" style="gap:12px;">
+          <button class="t-btn" style="color:#f59e0b; border-color:rgba(245,158,11,0.3); padding:10px 0; font-size:13px;" onclick="openPremiumGenerateKey()">Get Premium Key</button>
+          <button class="t-btn" style="color:#a855f7; border-color:rgba(168,85,247,0.3); padding:10px 0; font-size:13px;" onclick="openPremiumVideoLink()">Premium Guide</button>
+        </div>
+      </div>
+
+      <div id="key-success-area" style="display:none;">
+        <button class="btn-open" style="background:#10b981; box-shadow:0 8px 25px rgba(16,185,129,0.3);" onclick="openInstitute()">OPEN SELECTED INSTITUTE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= TASKS SCREEN ================= -->
+<div id="view-tasks" class="view">
+  <div class="wrap">
+    <div class="flex top">
+      <button class="btn-icon" onclick="goToPage('view-tools')" style="border:1px solid rgba(255,255,255,0.1)"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="brand" style="font-size:20px">My Tasks</div>
+      <div style="width:36px"></div>
+    </div>
+    <div class="sec" style="margin-top:20px;">
+      <div class="s-tit">ADD NEW TARGET</div>
+      <input type="text" id="task-name" class="t-inp" placeholder="Aaj kya padhna hai? (e.g. Physics Chapter 1)">
+      <input type="text" id="task-time" class="t-inp" placeholder="Kitne time lagana hai? (e.g. 2 Hours)" style="margin-top:10px;">
+      <button class="btn-add" onclick="addTask()"><i class="fa-solid fa-plus"></i> ADD TARGET</button>
+    </div>
+    <div class="sec">
+      <div class="s-tit">TODAY'S STUDY LIST</div>
+      <div id="task-container" class="task-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= NOTES SCREEN ================= -->
+<div id="view-notes" class="view">
+  <div class="wrap">
+    <div class="flex top">
+      <button class="btn-icon" onclick="goToPage('view-tools')" style="border:1px solid rgba(255,255,255,0.1)"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="brand" style="font-size:20px">My Notes</div>
+      <div style="width:36px"></div>
+    </div>
+    <div class="sec" style="margin-top:20px;">
+      <div class="s-tit">SEARCH NOTES</div>
+      <input type="text" id="note-search" class="t-inp" placeholder="Search title or content..." oninput="renderNotes()">
+    </div>
+    <div class="sec">
+      <div class="s-tit">ADD / EDIT NOTE</div>
+      <input type="text" id="note-title" class="t-inp" placeholder="Note heading">
+      <textarea id="note-text" class="t-inp" rows="5" placeholder="Yahan apna note likho..." style="margin-top:10px;"></textarea>
+      <div class="grid2" style="margin-top:10px;">
+        <div class="mode" style="cursor:default; justify-content:flex-start;">
+          <div class="m-ic"><i class="fa-solid fa-palette"></i></div>
+          <input type="color" id="note-color" value="#0ea5e9" style="width:100%; height:40px; border:none; background:transparent; padding:0;">
+        </div>
+        <div class="mode" onclick="togglePinDraft()">
+          <div class="flex" style="gap:10px;">
+            <div class="m-ic"><i class="fa-solid fa-thumbtack"></i></div>
+            <div>
+              <div class="c-tit" style="font-size:14px">Pin Note</div>
+              <div class="c-des">Keep on top</div>
+            </div>
+          </div>
+          <div class="dot" id="pin-dot"></div>
+        </div>
+      </div>
+      <button class="btn-add" id="save-note-btn" onclick="saveNote()"><i class="fa-solid fa-floppy-disk"></i> SAVE NOTE</button>
+      <button class="btn-add" id="cancel-edit-btn" onclick="cancelEdit()" style="display:none; background:#64748b;"><i class="fa-solid fa-xmark"></i> CANCEL EDIT</button>
+    </div>
+    <div class="sec">
+      <div class="s-tit">SAVED NOTES</div>
+      <div id="notes-container" class="notes-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= LOFI SCREEN ================= -->
+<div id="view-lofi" class="view">
+  <div class="wrap">
+    <div class="flex top">
+      <button class="btn-icon" onclick="goToPage('view-tools')" style="border:1px solid rgba(255,255,255,0.1)"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="brand" style="font-size:20px">Lofi Mode</div>
+      <div style="width:36px"></div>
+    </div>
+    <div class="sec" style="margin-top:20px;">
+      <div class="s-tit">NOW PLAYING</div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div style="width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,var(--accent),rgba(255,255,255,.08));display:grid;place-items:center;font-size:28px;"><i class="fa-solid fa-music"></i></div>
+        <div style="flex:1;">
+          <div id="lofi-title" style="font-size:18px;font-weight:800;margin-bottom:4px;">Loading...</div>
+          <div id="lofi-source" style="font-size:12px;color:var(--muted);">Fetching admin track</div>
+        </div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="s-tit">PROGRESS</div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px;">
+        <span id="lofi-current">00:00</span>
+        <span id="lofi-duration">00:00</span>
+      </div>
+      <div class="lofi-bar" onclick="seekLofi(event)"><div class="lofi-fill" id="lofi-fill"></div></div>
+    </div>
+    <div class="sec">
+      <div class="s-tit">CONTROLS</div>
+      <div class="lofi-controls">
+        <button class="btn-lofi" onclick="prevTrack()"><i class="fa-solid fa-backward-step"></i></button>
+        <button class="btn-lofi btn-lofi-play" id="lofi-play" onclick="toggleLofi()"><i class="fa-solid fa-play"></i></button>
+        <button class="btn-lofi" onclick="nextTrack()"><i class="fa-solid fa-forward-step"></i></button>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="s-tit">VOLUME</div>
+      <input type="range" id="lofi-volume" min="0" max="1" step="0.01" value="0.7" oninput="setLofiVolume(this.value)" style="width:100%;">
+    </div>
+    <div class="sec">
+      <div class="s-tit">PLAYLIST</div>
+      <div id="lofi-list" class="lofi-list"></div>
+    </div>
+  </div>
+  <audio id="lofi-audio" preload="metadata"></audio>
+</div>
+
+<!-- ================= AI DOUBT SCREEN ================= -->
+<div id="view-ai-doubt" class="view">
+  <div class="wrap">
+    <div class="flex top">
+      <button class="btn-icon" onclick="goToPage('view-tools')" style="border:1px solid rgba(255,255,255,0.1)"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="brand" style="font-size:20px">AI Doubt</div>
+      <button class="btn-icon" onclick="clearAIDoubt()" style="border:1px solid rgba(255,255,255,0.1)"><i class="fa-solid fa-broom"></i></button>
+    </div>
+    <div class="sec" style="margin-top:20px;">
+      <div class="s-tit">ASK YOUR DOUBT</div>
+      <textarea id="ai-question" class="t-inp" rows="5" placeholder="Apna question type karo..."></textarea>
+      <button class="btn-add" style="margin-top:12px;" onclick="askAIDoubt()"><i class="fa-solid fa-paper-plane"></i> ASK AI</button>
+    </div>
+    <div class="sec">
+      <div class="s-tit">ANSWER</div>
+      <div id="ai-answer" style="white-space:pre-wrap;line-height:1.7;font-size:14px;color:var(--text);">Yahan answer aayega...</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig={apiKey:"AIzaSyBXX0sTwY_o8RWXtx8D4xMhesgTaG2fsMQ",authDomain:"grow-study-7a14c.firebaseapp.com",databaseURL:"https://grow-study-7a14c-default-rtdb.firebaseio.com",projectId:"grow-study-7a14c",storageBucket:"grow-study-7a14c.firebasestorage.app",messagingSenderId:"567882221771",appId:"1:567882221771:web:4e9ef1ba6018a76d9db34e"};
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
+
+var appLinks={}; var currentSelectedInstitute="";
+var appKeys={}; var appPremiumKeys={}; 
+var appSettings={generateUrl:"", videoUrl:"", telegramUrl:"", youtubeUrl:"", instagramUrl:"", premiumGenerateUrl:"", premiumVideoUrl:""};
+
+db.ref('institute_links').on('value',s=>{if(s.exists())appLinks=s.val()});
+db.ref('institute_keys').on('value',s=>{if(s.exists())appKeys=s.val()});
+db.ref('institute_premium_keys').on('value',s=>{if(s.exists())appPremiumKeys=s.val()});
+db.ref('app_settings').on('value',s=>{if(s.exists())appSettings=s.val()});
+
+function goToPage(pageId){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  window.scrollTo(0,0);
+  if(pageId === 'view-batchee') updateBatcheeUI();
+}
+
+function selectInstitute(linkKey){
+  currentSelectedInstitute=linkKey;
+  document.querySelectorAll('.list .card').forEach(c=>c.classList.remove('active'));
+  var clickedCard=document.querySelector(`.list .card[onclick="selectInstitute('${linkKey}')"]`);
+  if(clickedCard) clickedCard.classList.add('active');
+  
+  goToPage('view-tools');
+}
+
+function openInstitute(){if(appLinks[currentSelectedInstitute]&&appLinks[currentSelectedInstitute]!=""){window.open(appLinks[currentSelectedInstitute],'_blank')}else{alert("Admin ne abhi tak is institute ka link update nahi kiya hai!")}}
+function changeColor(clr,elem){document.documentElement.style.setProperty('--accent',clr);document.documentElement.style.setProperty('--accentSoft',clr+'22');document.querySelectorAll('.c-dot').forEach(d=>d.classList.remove('active'));if(elem)elem.classList.add('active');if(document.getElementById('view-tasks').classList.contains('active'))renderTasks();if(document.getElementById('view-notes').classList.contains('active'))renderNotes()}
+function changeTheme(t){document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('thm',t)}catch(err){};document.querySelectorAll('.top-dark,.m-dark').forEach(x=>{if(t==='dark'){x.classList.add('active');x.classList.add('on')}else{x.classList.remove('active');x.classList.remove('on')}});document.querySelectorAll('.top-light,.m-light').forEach(x=>{if(t==='light'){x.classList.add('active');x.classList.add('on')}else{x.classList.remove('active');x.classList.remove('on')}})}
+
+// ================= PREMIUM TIMER LOGIC START =================
+var timerInterval=null, totalSeconds=25*60, remainingSeconds=totalSeconds, isTimerRunning=false, circleLength=722;
+function updateTimer(){var m=Math.floor(remainingSeconds/60),s=remainingSeconds%60;var txt=document.getElementById('t-txt');txt.innerText=(m<10?'0'+m:m)+":"+(s<10?'0'+s:s);var progress=remainingSeconds/totalSeconds;var prCircle=document.getElementById('t-pr');prCircle.style.strokeDashoffset=circleLength-(progress*circleLength);if(progress<0.2){prCircle.style.stroke='#ef4444';txt.style.background='linear-gradient(135deg, #fff 20%, #ef4444 100%)';txt.style.webkitBackgroundClip='text'}else if(progress<0.5){prCircle.style.stroke='#f59e0b';txt.style.background='linear-gradient(135deg, #fff 20%, #f59e0b 100%)';txt.style.webkitBackgroundClip='text'}else{prCircle.style.stroke='var(--accent)';txt.style.background='linear-gradient(135deg, #fff 20%, var(--accent) 100%)';txt.style.webkitBackgroundClip='text'}}
+function setupTimer(m,btnId){if(isTimerRunning)toggleTimer();document.querySelectorAll('.t-btn').forEach(b=>b.classList.remove('active'));document.getElementById(btnId).classList.add('active');totalSeconds=m*60;remainingSeconds=totalSeconds;updateTimer()}
+function toggleTimer(){var b=document.getElementById('s-btn');var wrap=document.getElementById('timer-wrap');if(isTimerRunning){clearInterval(timerInterval);b.innerHTML='<i class="fa-solid fa-play"></i> Resume';b.style.background='var(--pill)';b.style.color='var(--text)';wrap.classList.remove('is-running')}else{timerInterval=setInterval(function(){remainingSeconds--;updateTimer();if(remainingSeconds<=0){clearInterval(timerInterval);isTimerRunning=false;b.innerHTML='<i class="fa-solid fa-play"></i> Start';wrap.classList.remove('is-running')}},1000);b.innerHTML='<i class="fa-solid fa-pause"></i> Pause';b.style.background='var(--accent)';b.style.color='#fff';wrap.classList.add('is-running')}isTimerRunning=!isTimerRunning}
+function resetTimer(){if(isTimerRunning)toggleTimer();document.getElementById('timer-wrap').classList.remove('is-running');remainingSeconds=totalSeconds;updateTimer();var b=document.getElementById('s-btn');b.innerHTML='<i class="fa-solid fa-play"></i> Start';b.style.background='var(--accent)';b.style.color='#fff';document.getElementById('t-pr').style.stroke='var(--accent)';document.getElementById('t-txt').style.background='linear-gradient(135deg, #fff 20%, var(--accent) 100%)';document.getElementById('t-txt').style.webkitBackgroundClip='text'}
+// ================= PREMIUM TIMER LOGIC END =================
+
+var tasksList=JSON.parse(localStorage.getItem('grow_tasks'))||[];
+function renderTasks(){var c=document.getElementById('task-container');c.innerHTML='';if(!tasksList.length){c.innerHTML='<div class="empty-msg"><i class="fa-solid fa-clipboard-list" style="font-size:36px;margin-bottom:12px;display:block;color:var(--accentSoft);"></i>Abhi tak koi target nahi banaya.<br>Target set karo aur padhai chalu karo!</div>';return}for(var i=0;i<tasksList.length;i++){var task=tasksList[i],doneClass=task.completed?'done':'',iconClass=task.completed?'fa-rotate-left':'fa-check',doneBg=task.completed?'background:#f59e0b;':'background:#10b981;';c.innerHTML+=`<div class="task-item ${doneClass}"><div class="t-info"><div class="t-name">${escapeHTML(task.name)}</div><div class="t-time"><i class="fa-regular fa-clock"></i> ${escapeHTML(task.time)}</div></div><div class="t-actions"><button class="btn-act" style="${doneBg}" onclick="toggleTask(${i})"><i class="fa-solid ${iconClass}"></i></button><button class="btn-act btn-del" onclick="deleteTask(${i})"><i class="fa-solid fa-trash"></i></button></div></div>`}}
+function addTask(){var n=document.getElementById('task-name'),t=document.getElementById('task-time');if(n.value.trim()===''){alert('Padhna kya hai wo toh likho target mein!');return}tasksList.push({name:n.value.trim(),time:t.value.trim()||'No fixed time',completed:false});n.value='';t.value='';saveAndRenderTasks()}
+function toggleTask(i){tasksList[i].completed=!tasksList[i].completed;saveAndRenderTasks()}
+function deleteTask(i){tasksList.splice(i,1);saveAndRenderTasks()}
+function saveAndRenderTasks(){localStorage.setItem('grow_tasks',JSON.stringify(tasksList));renderTasks()}
+
+var notesList=JSON.parse(localStorage.getItem('grow_notes'))||[],editingNoteId=null,pinDraft=false;
+function saveNotes(){localStorage.setItem('grow_notes',JSON.stringify(notesList))}
+function togglePinDraft(){pinDraft=!pinDraft;var d=document.getElementById('pin-dot');d.style.background=pinDraft?'#22c55e':'rgba(255,255,255,.12)';d.style.boxShadow=pinDraft?'0 0 10px #22c55e':'none'}
+function renderNotes(){var c=document.getElementById('notes-container');var q=(document.getElementById('note-search')?.value||'').trim().toLowerCase();var list=notesList.slice().sort(function(a,b){return(b.pinned===true)-(a.pinned===true)});if(q)list=list.filter(function(n){return(n.title||'').toLowerCase().includes(q)||(n.text||'').toLowerCase().includes(q)});c.innerHTML='';if(!list.length){c.innerHTML='<div class="empty-msg"><i class="fa-solid fa-note-sticky" style="font-size:36px;margin-bottom:12px;display:block;color:var(--accentSoft);"></i>Abhi tak koi note nahi mila.<br>Note add karo ya search clear karo!</div>';return}for(var i=0;i<list.length;i++){var note=list[i],pinnedHTML=note.pinned?'<span class="note-badge" style="background:rgba(251,191,36,.18);color:#fbbf24;">PINNED</span>':'',color=note.color||'#0ea5e9';c.innerHTML+=`<div class="note-item ${note.pinned?'pinned':''}" style="border-left:5px solid ${color};"><div class="note-content"><div class="note-head"><div class="note-title" style="color:${color};">${escapeHTML(note.title||'Untitled')}</div>${pinnedHTML}</div><div class="note-text">${escapeHTML(note.text||'')}</div><div class="note-meta"><span class="note-badge"><span class="note-color-dot" style="background:${color};"></span> Highlight</span><span class="note-badge"><i class="fa-regular fa-clock"></i> ${escapeHTML(note.time||'')}</span></div></div><div class="note-actions"><button class="btn-act" style="background:#f59e0b;" onclick="editNote('${note.id}')"><i class="fa-solid fa-pen"></i></button><button class="btn-act" style="background:${note.pinned?'#22c55e':'#64748b'};" onclick="togglePin('${note.id}')"><i class="fa-solid fa-thumbtack"></i></button><button class="btn-act btn-del" onclick="deleteNote('${note.id}')"><i class="fa-solid fa-trash"></i></button></div></div>`}}
+function saveNote(){var ti=document.getElementById('note-title'),te=document.getElementById('note-text'),co=document.getElementById('note-color');var title=ti.value.trim(),text=te.value.trim(),color=co.value||'#0ea5e9';if(title===''&&text===''){alert('Kuch note likho pehle!');return}if(editingNoteId){var idx=notesList.findIndex(n=>n.id===editingNoteId);if(idx!==-1){notesList[idx].title=title||'Untitled';notesList[idx].text=text;notesList[idx].color=color;notesList[idx].pinned=pinDraft;notesList[idx].updatedAt=Date.now()}editingNoteId=null;document.getElementById('save-note-btn').innerHTML='<i class="fa-solid fa-floppy-disk"></i> SAVE NOTE';document.getElementById('cancel-edit-btn').style.display='none'}else{var now=new Date();notesList.unshift({id:Date.now().toString()+Math.random().toString(36).slice(2),title:title||'Untitled',text:text,color:color,pinned:pinDraft,time:now.toLocaleString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}),createdAt:Date.now(),updatedAt:Date.now()})}ti.value='';te.value='';co.value='#0ea5e9';pinDraft=false;document.getElementById('pin-dot').style.background='rgba(255,255,255,.12)';document.getElementById('pin-dot').style.boxShadow='none';saveNotes();renderNotes()}
+function editNote(id){var note=notesList.find(n=>n.id===id);if(!note)return;editingNoteId=id;document.getElementById('note-title').value=note.title||'';document.getElementById('note-text').value=note.text||'';document.getElementById('note-color').value=note.color||'#0ea5e9';pinDraft=!!note.pinned;document.getElementById('pin-dot').style.background=pinDraft?'#22c55e':'rgba(255,255,255,.12)';document.getElementById('pin-dot').style.boxShadow=pinDraft?'0 0 10px #22c55e':'none';document.getElementById('save-note-btn').innerHTML='<i class="fa-solid fa-floppy-disk"></i> UPDATE NOTE';document.getElementById('cancel-edit-btn').style.display='block'}
+function cancelEdit(){editingNoteId=null;document.getElementById('note-title').value='';document.getElementById('note-text').value='';document.getElementById('note-color').value='#0ea5e9';pinDraft=false;document.getElementById('pin-dot').style.background='rgba(255,255,255,.12)';document.getElementById('pin-dot').style.boxShadow='none';document.getElementById('save-note-btn').innerHTML='<i class="fa-solid fa-floppy-disk"></i> SAVE NOTE';document.getElementById('cancel-edit-btn').style.display='none'}
+function deleteNote(id){notesList=notesList.filter(n=>n.id!==id);if(editingNoteId===id)cancelEdit();saveNotes();renderNotes()}
+function togglePin(id){var note=notesList.find(n=>n.id===id);if(!note)return;note.pinned=!note.pinned;note.updatedAt=Date.now();saveNotes();renderNotes()}
+function escapeHTML(str){return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+
+var lofiAudio=document.getElementById('lofi-audio'),lofiPlayBtn=document.getElementById('lofi-play'),lofiTitleEl=document.getElementById('lofi-title'),lofiSourceEl=document.getElementById('lofi-source'),lofiCurrentEl=document.getElementById('lofi-current'),lofiDurationEl=document.getElementById('lofi-duration'),lofiFillEl=document.getElementById('lofi-fill'),lofiListEl=document.getElementById('lofi-list'),lofiVolumeEl=document.getElementById('lofi-volume');
+var lofiPlaylist=[],currentLofiIndex=0;
+function loadLofiPlaylist(){db.ref('lofi_songs').on('value',function(snapshot){var arr=[];snapshot.forEach(function(child){var v=child.val()||{};arr.push({id:child.key,title:v.title||'Untitled Lofi',url:v.url||'',source:v.source||'Admin Panel',createdAt:v.createdAt||0})});arr.sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)});lofiPlaylist=arr;if(!lofiPlaylist.length){lofiTitleEl.innerText='No song found';lofiSourceEl.innerText='Admin panel empty';lofiListEl.innerHTML='<div class="empty-msg">No songs available right now.</div>';lofiAudio.removeAttribute('src');lofiAudio.load();return}if(currentLofiIndex>=lofiPlaylist.length) currentLofiIndex=0;renderLofiPlaylist();loadCurrentLofiTrack()})}
+function renderLofiPlaylist(){if(!lofiListEl) return;lofiListEl.innerHTML='';for(var i=0;i<lofiPlaylist.length;i++){var track=lofiPlaylist[i],active=i===currentLofiIndex?'active':'';lofiListEl.innerHTML+=`<div class="lofi-track ${active}" onclick="selectLofiTrack(${i})"><div class="lofi-track-info"><div class="lofi-track-title">${escapeHTML(track.title)}</div><div class="lofi-track-sub">${escapeHTML(track.source)}</div></div><button class="lofi-small-btn" onclick="event.stopPropagation(); playSelectedTrack(${i})"><i class="fa-solid fa-play"></i></button></div>`}}
+function loadCurrentLofiTrack(){if(!lofiPlaylist.length) return;var track=lofiPlaylist[currentLofiIndex];lofiAudio.src=track.url;lofiTitleEl.innerText=track.title;lofiSourceEl.innerText=track.source;renderLofiPlaylist()}
+function toggleLofi(){if(!lofiAudio.src)loadCurrentLofiTrack();if(lofiAudio.paused){lofiAudio.play();lofiPlayBtn.innerHTML='<i class="fa-solid fa-pause"></i>'}else{lofiAudio.pause();lofiPlayBtn.innerHTML='<i class="fa-solid fa-play"></i>'}}
+function playSelectedTrack(index){currentLofiIndex=index;loadCurrentLofiTrack();lofiAudio.play();lofiPlayBtn.innerHTML='<i class="fa-solid fa-pause"></i>'}
+function prevTrack(){if(!lofiPlaylist.length)return;currentLofiIndex=(currentLofiIndex-1+lofiPlaylist.length)%lofiPlaylist.length;loadCurrentLofiTrack();lofiAudio.play();lofiPlayBtn.innerHTML='<i class="fa-solid fa-pause"></i>'}
+function setLofiVolume(v){lofiAudio.volume=Number(v)}
+function formatTime(sec){if(!isFinite(sec))return'00:00';var m=Math.floor(sec/60),s=Math.floor(sec%60);return(m<10?'0'+m:m)+':'+(s<10?'0'+s:s)}
+function seekLofi(e){if(!lofiAudio.duration)return;var rect=e.currentTarget.getBoundingClientRect();var percent=(e.clientX-rect.left)/rect.width;lofiAudio.currentTime=percent*lofiAudio.duration}
+lofiAudio.addEventListener('timeupdate',function(){if(!lofiAudio.duration)return;lofiCurrentEl.innerText=formatTime(lofiAudio.currentTime);lofiDurationEl.innerText=formatTime(lofiAudio.duration);lofiFillEl.style.width=((lofiAudio.currentTime/lofiAudio.duration)*100)+'%'});
+lofiAudio.addEventListener('ended',function(){nextTrack()});lofiAudio.addEventListener('play',function(){lofiPlayBtn.innerHTML='<i class="fa-solid fa-pause"></i>'});lofiAudio.addEventListener('pause',function(){lofiPlayBtn.innerHTML='<i class="fa-solid fa-play"></i>'});
+
+const GEMINI_API_KEY="AIzaSyAB2asxzJGGasAUcA6tTde4NXdR4qkkcfE";
+async function askAIDoubt(){
+  const q=document.getElementById('ai-question').value.trim();
+  const ans=document.getElementById('ai-answer');
+  if(!q){alert('Pehle apna question likho');return}
+  ans.innerText='Soch raha hoon...';
+  try{
+    const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+    const response=await fetch(url,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-goog-api-key':GEMINI_API_KEY
+      },
+      body:JSON.stringify({
+        contents:[{
+          role:"user",
+          parts:[{
+            text:`You are a helpful student tutor. Answer in simple Hindi, step by step, concise but clear.
+Question: ${q}`
+          }]
+        }]
+      })
+    });
+    const data=await response.json();
+    if(data.error){ans.innerText='Error: '+data.error.message;return}
+    const text=data?.candidates?.[0]?.content?.parts?.map(p=>p.text).join('')||'No answer received';
+    ans.innerText=text;
+  }catch(err){
+    ans.innerText='Error: answer nahi aa saka';
+  }
+}
+function clearAIDoubt(){document.getElementById('ai-question').value='';document.getElementById('ai-answer').innerText='Yahan answer aayega...'}
+
+function updateBatcheeUI() {
+  var unlockedData = JSON.parse(localStorage.getItem('grow_unlocked_servers') || '{}');
+  var expiryData = unlockedData[currentSelectedInstitute];
+  var isLifetime = expiryData === 'lifetime';
+  var isUnlocked = isLifetime || (expiryData && typeof expiryData === 'number' && expiryData > Date.now());
+  
+  if (isUnlocked) {
+    document.getElementById('lock-icon').innerText = isLifetime ? '💎' : '🚀';
+    document.getElementById('lock-title').innerText = isLifetime ? 'LIFETIME UNLOCKED' : 'FULLY UNLOCKED';
+    document.getElementById('lock-title').style.color = isLifetime ? '#f59e0b' : '#10b981';
+    document.getElementById('lock-desc').innerText = 'Server access granted. You can now enter the institute.';
+    document.getElementById('key-status-text').innerText = isLifetime ? 'VIP ACCESS' : 'UNLOCKED';
+    document.getElementById('key-status-text').style.color = isLifetime ? '#f59e0b' : '#10b981';
+    
+    if (isLifetime) {
+      document.getElementById('key-expiry-text').innerText = "Lifetime";
+      document.getElementById('key-expiry-text').style.color = "#f59e0b";
+    } else {
+      var timeLeft = Math.floor((expiryData - Date.now()) / (1000 * 60 * 60));
+      document.getElementById('key-expiry-text').innerText = timeLeft + " Hours Left";
+      document.getElementById('key-expiry-text').style.color = "#fff"; 
+    }
+
+    document.getElementById('key-input-area').style.display = 'none';
+    document.getElementById('key-success-area').style.display = 'block';
+  } else {
+    document.getElementById('lock-icon').innerText = '🔒';
+    document.getElementById('lock-title').innerText = 'SERVER LOCKED';
+    document.getElementById('lock-title').style.color = 'var(--text)';
+    document.getElementById('lock-desc').innerText = 'Generate and enter the key to unlock this server for 24 hours, or use a Premium Key for lifetime access.';
+    document.getElementById('key-status-text').innerText = 'LOCKED';
+    document.getElementById('key-status-text').style.color = '#ef4444';
+    document.getElementById('key-expiry-text').innerText = 'N/A';
+    document.getElementById('key-expiry-text').style.color = "#fff";
+
+    document.getElementById('key-input-area').style.display = 'block';
+    document.getElementById('key-success-area').style.display = 'none';
+  }
+}
+
+function verifyKey() {
+  var inputKey = document.getElementById('access-key-input').value.trim();
+  if(currentSelectedInstitute === "") { alert("Bhai pehle home page se koi institute select karo!"); return; }
+  if(inputKey === "") { alert("Pehle 24h access key enter karo!"); return; }
+  
+  var correctKey = appKeys[currentSelectedInstitute];
+  if(!correctKey) { alert("Admin ne abhi is institute ke liye key set nahi ki hai."); return; }
+
+  if(inputKey === correctKey) {
+    var expiry = Date.now() + (24 * 60 * 60 * 1000); 
+    var unlockedData = JSON.parse(localStorage.getItem('grow_unlocked_servers') || '{}');
+    unlockedData[currentSelectedInstitute] = expiry;
+    localStorage.setItem('grow_unlocked_servers', JSON.stringify(unlockedData));
+    
+    document.getElementById('access-key-input').value = ""; 
+    updateBatcheeUI(); 
+  } else {
+    alert("Galat Key! 'How to Use' wala video dekho aur sahi key nikalo.");
+  }
+}
+
+function verifyPremiumKey() {
+  var inputKey = document.getElementById('premium-key-input').value.trim();
+  if(currentSelectedInstitute === "") { alert("Bhai pehle home page se koi institute select karo!"); return; }
+  if(inputKey === "") { alert("Pehle Lifetime Premium Key enter karo!"); return; }
+  
+  var correctPremiumKey = appPremiumKeys[currentSelectedInstitute];
+  if(!correctPremiumKey) { alert("Admin ne abhi is institute ke liye Premium Key set nahi ki hai."); return; }
+
+  if(inputKey === correctPremiumKey) {
+    var unlockedData = JSON.parse(localStorage.getItem('grow_unlocked_servers') || '{}');
+    unlockedData[currentSelectedInstitute] = 'lifetime';
+    localStorage.setItem('grow_unlocked_servers', JSON.stringify(unlockedData));
+    
+    document.getElementById('premium-key-input').value = ""; 
+    updateBatcheeUI(); 
+  } else {
+    alert("Galat Premium Key! Kripya sahi VIP key enter karein.");
+  }
+}
+
+function openGenerateKey() {
+  if(appSettings.generateUrl) { window.open(appSettings.generateUrl, '_blank'); } 
+  else { alert("Admin ne abhi 24h website link add nahi kiya hai!"); }
+}
+function openVideoLink() {
+  if(appSettings.videoUrl) { window.open(appSettings.videoUrl, '_blank'); } 
+  else { alert("Admin ne abhi 24h video link add nahi kiya hai!"); }
+}
+
+function openPremiumGenerateKey() {
+  if(appSettings.premiumGenerateUrl) { window.open(appSettings.premiumGenerateUrl, '_blank'); } 
+  else { alert("Admin ne abhi Premium website link add nahi kiya hai!"); }
+}
+function openPremiumVideoLink() {
+  if(appSettings.premiumVideoUrl) { window.open(appSettings.premiumVideoUrl, '_blank'); } 
+  else { alert("Admin ne abhi Premium video link add nahi kiya hai!"); }
+}
+
+function openTelegram() {
+  if(appSettings.telegramUrl && appSettings.telegramUrl !== "") { window.open(appSettings.telegramUrl, '_blank'); } 
+  else { alert("Admin ne abhi Telegram link add nahi kiya hai!"); }
+}
+function openYoutube() {
+  if(appSettings.youtubeUrl && appSettings.youtubeUrl !== "") { window.open(appSettings.youtubeUrl, '_blank'); } 
+  else { alert("Admin ne abhi YouTube link add nahi kiya hai!"); }
+}
+function openInstagram() {
+  if(appSettings.instagramUrl && appSettings.instagramUrl !== "") { window.open(appSettings.instagramUrl, '_blank'); } 
+  else { alert("Admin ne abhi Instagram link add nahi kiya hai!"); }
+}
+
+window.onload = function() {
+  setTimeout(function() {
+    document.getElementById('splash-screen').classList.add('hidden');
+  }, 1500);
+
+  var savedTheme='dark';
+  try { savedTheme=localStorage.getItem('thm')||'dark' } catch(err){}
+  changeTheme(savedTheme);
+  document.getElementById('t-pr').style.strokeDasharray = circleLength;
+  updateTimer(); renderTasks(); renderNotes(); loadLofiPlaylist(); setLofiVolume(0.7);
+};
+</script>
+</body>
+</html>

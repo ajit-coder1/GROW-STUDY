@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Grow Study - Admin Panel</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+:root{--bg:#050505;--card:rgba(18,20,28,.82);--pill:rgba(25,27,35,.72);--text:#fff;--muted:#94a3b8;--accent:#0ea5e9;--accentSoft:rgba(14,165,233,.18)}
+html[data-theme="light"]{--bg:#f8fafc;--card:rgba(255,255,255,.92);--pill:rgba(255,255,255,.88);--text:#0f172a;--muted:#475569}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background-color:var(--bg);background-image:radial-gradient(circle at top,var(--accentSoft),transparent 45%);background-repeat:no-repeat;background-attachment:fixed;color:var(--text);min-height:100vh}
+.wrap{max-width:480px;margin:0 auto;padding:22px 16px 80px;position:relative;z-index:10}
+.flex{display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:20px;font-weight:900;background:linear-gradient(135deg,var(--text) 20%,var(--accent) 100%);-webkit-background-clip:text;color:transparent;text-transform:uppercase}
+.pill-box{display:flex;gap:6px;padding:4px;border-radius:99px;background:var(--pill);border:1px solid rgba(255,255,255,.08)}
+.btn-icon{width:36px;height:36px;border:none;border-radius:50%;background:0 0;color:var(--muted);display:grid;place-items:center;cursor:pointer;transition:transform .15s}
+.btn-icon:active{transform:scale(.9)}
+.btn-icon.active{background:var(--accent);color:#fff}
+.hero{text-align:center;margin:20px 0}
+.badge{background:var(--accentSoft);border:1px solid var(--accent);color:var(--accent);padding:6px 16px;border-radius:99px;font-size:10px;letter-spacing:3px;font-weight:800;display:inline-block;margin-bottom:10px}
+h1{font-size:32px;line-height:1.2;font-weight:900;letter-spacing:-1px}
+.sec{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:24px;padding:20px;margin-bottom:15px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.s-tit{font-size:12px;font-weight:800;letter-spacing:2px;color:var(--muted);margin-bottom:15px;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:10px}
+.input-group{margin-bottom:16px}
+.input-group label{display:block;font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}
+.input-group input{width:100%;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text);font-size:14px;outline:none;transition:border-color .2s}
+.input-group input:focus{border-color:var(--accent);background:rgba(255,255,255,.08)}
+.input-group input::placeholder{color:var(--muted);opacity:.6}
+.btn-save{width:100%;padding:18px;border-radius:16px;border:none;background:var(--accent);color:#fff;font-size:16px;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 25px var(--accentSoft);transition:transform .15s,opacity .15s;margin-top:10px}
+.btn-save:active{transform:scale(.96);opacity:.9}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#10b981;color:#fff;padding:12px 24px;border-radius:99px;font-size:14px;font-weight:700;opacity:0;transition:all .3s ease;z-index:100;box-shadow:0 5px 15px rgba(16,185,129,.4)}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.song-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px;margin-bottom:10px}
+.song-item h3{font-size:14px;margin-bottom:4px;word-break:break-word}
+.song-item p{font-size:12px;color:var(--muted);word-break:break-word}
+.song-item .meta{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.song-actions{display:flex;gap:8px}
+.btn-mini{border:none;border-radius:12px;padding:10px 12px;color:#fff;cursor:pointer;font-size:12px;font-weight:700}
+.btn-del{background:#ef4444}
+.btn-use{background:#10b981}
+.empty{color:var(--muted);font-size:13px;text-align:center;padding:16px 0}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="flex top">
+    <div class="brand"><i class="fa-solid fa-user-shield"></i> Admin Panel</div>
+    <div class="pill-box">
+      <button class="btn-icon active top-dark" onclick="changeTheme('dark')"><i class="fa-solid fa-moon"></i></button>
+      <button class="btn-icon top-light" onclick="changeTheme('light')"><i class="fa-solid fa-sun"></i></button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="badge">MANAGE APP</div>
+    <h1>Master Controller</h1>
+  </div>
+
+  <div class="sec">
+    <div class="s-tit">GLOBAL APP SETTINGS</div>
+    <div class="input-group">
+      <label>1. 24h Generate Key Link</label>
+      <input type="url" id="setting-generate-url" placeholder="https://aapki-website.com/generate">
+    </div>
+    <div class="input-group">
+      <label>2. 24h How to Use Video</label>
+      <input type="url" id="setting-video-url" placeholder="https://youtube.com/watch?v=...">
+    </div>
+    
+    <div class="input-group">
+      <label style="color: #f59e0b;"><i class="fa-solid fa-crown"></i> 3. Premium Generate Key Link</label>
+      <input type="url" id="setting-premium-generate-url" placeholder="https://aapki-website.com/premium-generate" style="border-color: rgba(245, 158, 11, 0.3);">
+    </div>
+    <div class="input-group">
+      <label style="color: #f59e0b;"><i class="fa-solid fa-crown"></i> 4. Premium How to Use Video</label>
+      <input type="url" id="setting-premium-video-url" placeholder="https://youtube.com/watch?v=premium..." style="border-color: rgba(245, 158, 11, 0.3);">
+    </div>
+
+    <div class="input-group">
+      <label>5. Telegram Channel Link</label>
+      <input type="url" id="setting-telegram-url" placeholder="https://t.me/your_channel">
+    </div>
+    <div class="input-group">
+      <label>6. YouTube Channel Link</label>
+      <input type="url" id="setting-youtube-url" placeholder="https://youtube.com/@your_channel">
+    </div>
+    <div class="input-group">
+      <label>7. Instagram Profile Link</label>
+      <input type="url" id="setting-instagram-url" placeholder="https://instagram.com/your_profile">
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="s-tit">INSTITUTE REDIRECT LINKS</div>
+    <!-- Old 13 Links -->
+    <div class="input-group"><label>1. PW Prime Link</label><input type="url" id="link-pw-prime" placeholder="https://example.com/pw-prime"></div>
+    <div class="input-group"><label>2. PW Node 2 Link</label><input type="url" id="link-pw-node2" placeholder="https://example.com/pw-node2"></div>
+    <div class="input-group"><label>3. PW Nexus Link</label><input type="url" id="link-pw-nexus" placeholder="https://example.com/pw-nexus"></div>
+    <div class="input-group"><label>4. Next Topper Link</label><input type="url" id="link-next-topper" placeholder="https://example.com/next-topper"></div>
+    <div class="input-group"><label>5. KGS Portal Link</label><input type="url" id="link-kgs-portal" placeholder="https://example.com/kgs"></div>
+    <div class="input-group"><label>6. Unacademy Link</label><input type="url" id="link-unacademy" placeholder="https://example.com/unacademy"></div>
+    <div class="input-group"><label>7. Vidyakul Link</label><input type="url" id="link-vidyakul" placeholder="https://example.com/vidyakul"></div>
+    <div class="input-group"><label>8. RWA Squad Link</label><input type="url" id="link-rwa" placeholder="https://example.com/rwa"></div>
+    <div class="input-group"><label>9. Study IQ Link</label><input type="url" id="link-studyiq" placeholder="https://example.com/studyiq"></div>
+    <div class="input-group"><label>10. Mission Jeet Link</label><input type="url" id="link-mission-jeet" placeholder="https://example.com/mission-jeet"></div>
+    <div class="input-group"><label>11. Selection Next Link</label><input type="url" id="link-selection-next" placeholder="https://example.com/selection-next"></div>
+    <div class="input-group"><label>12. Careerwill Link</label><input type="url" id="link-careerwill" placeholder="https://example.com/careerwill"></div>
+    <div class="input-group"><label>13. Science and Fun Link</label><input type="url" id="link-science-fun" placeholder="https://example.com/science-fun"></div>
+    <!-- New 12 Links -->
+    <div class="input-group"><label>14. GYAN BINDU Link</label><input type="url" id="link-gyan-bindu" placeholder="https://example.com/gyan-bindu"></div>
+    <div class="input-group"><label>15. AASH OFFICIAL Link</label><input type="url" id="link-aash" placeholder="https://example.com/aash"></div>
+    <div class="input-group"><label>16. WINNER INSTITUTE Link</label><input type="url" id="link-winning" placeholder="https://example.com/winning"></div>
+    <div class="input-group"><label>17. PARMAR ACADEMY Link</label><input type="url" id="link-farmar" placeholder="https://example.com/farmar"></div>
+    <div class="input-group"><label>18. LAKSHYA CLASSES Link</label><input type="url" id="link-lakshya" placeholder="https://example.com/lakshya"></div>
+    <div class="input-group"><label>19. SAMYAK IAS Link</label><input type="url" id="link-samyak" placeholder="https://example.com/samyak"></div>
+    <div class="input-group"><label>20. KAUTILYA CLASSES Link</label><input type="url" id="link-kautilya" placeholder="https://example.com/kautilya"></div>
+    <div class="input-group"><label>21. APNA COLLEGE Link</label><input type="url" id="link-apna" placeholder="https://example.com/apna"></div>
+    <div class="input-group"><label>22. ALPHA INSTITUTE Link</label><input type="url" id="link-alpha" placeholder="https://example.com/alpha"></div>
+    <div class="input-group"><label>23. JOBS TARGET Link</label><input type="url" id="link-jobs" placeholder="https://example.com/jobs"></div>
+    <div class="input-group"><label>24. CDS JOURNEY Link</label><input type="url" id="link-cds" placeholder="https://example.com/cds"></div>
+    <div class="input-group"><label>25. TEXTBOOK Link</label><input type="url" id="link-textbook" placeholder="https://example.com/textbook"></div>
+  </div>
+
+  <div class="sec">
+    <div class="s-tit">INSTITUTE ACCESS KEYS (24H UNLOCK)</div>
+    <!-- Old 13 Keys -->
+    <div class="input-group"><label>1. PW Prime Key</label><input type="text" id="key-link-pw-prime" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>2. PW Node 2 Key</label><input type="text" id="key-link-pw-node2" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>3. PW Nexus Key</label><input type="text" id="key-link-pw-nexus" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>4. Next Topper Key</label><input type="text" id="key-link-next-topper" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>5. KGS Portal Key</label><input type="text" id="key-link-kgs-portal" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>6. Unacademy Key</label><input type="text" id="key-link-unacademy" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>7. Vidyakul Key</label><input type="text" id="key-link-vidyakul" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>8. RWA Squad Key</label><input type="text" id="key-link-rwa" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>9. Study IQ Key</label><input type="text" id="key-link-studyiq" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>10. Mission Jeet Key</label><input type="text" id="key-link-mission-jeet" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>11. Selection Next Key</label><input type="text" id="key-link-selection-next" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>12. Careerwill Key</label><input type="text" id="key-link-careerwill" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>13. Science and Fun Key</label><input type="text" id="key-link-science-fun" placeholder="e.g. GROW123"></div>
+    <!-- New 12 Keys -->
+    <div class="input-group"><label>14. GYAN BINDU Key</label><input type="text" id="key-link-gyan-bindu" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>15. AASH OFFICIAL Key</label><input type="text" id="key-link-aash" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>16. WINNER INSTITUTE Key</label><input type="text" id="key-link-winning" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>17. PARMAR ACADEMY Key</label><input type="text" id="key-link-farmar" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>18. LAKSHYA CLASSES Key</label><input type="text" id="key-link-lakshya" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>19. SAMYAK IAS Key</label><input type="text" id="key-link-samyak" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>20. KAUTILYA CLASSES Key</label><input type="text" id="key-link-kautilya" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>21. APNA COLLEGE Key</label><input type="text" id="key-link-apna" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>22. ALPHA INSTITUTE Key</label><input type="text" id="key-link-alpha" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>23. JOBS TARGET Key</label><input type="text" id="key-link-jobs" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>24. CDS JOURNEY Key</label><input type="text" id="key-link-cds" placeholder="e.g. GROW123"></div>
+    <div class="input-group"><label>25. TEXTBOOK Key</label><input type="text" id="key-link-textbook" placeholder="e.g. GROW123"></div>
+  </div>
+
+  <div class="sec">
+    <div class="s-tit" style="color: #f59e0b;"><i class="fa-solid fa-crown"></i> INSTITUTE PREMIUM KEYS (LIFETIME UNLOCK)</div>
+    <!-- Old 13 Premium Keys -->
+    <div class="input-group"><label>1. PW Prime Premium Key</label><input type="text" id="premium-key-link-pw-prime" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>2. PW Node 2 Premium Key</label><input type="text" id="premium-key-link-pw-node2" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>3. PW Nexus Premium Key</label><input type="text" id="premium-key-link-pw-nexus" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>4. Next Topper Premium Key</label><input type="text" id="premium-key-link-next-topper" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>5. KGS Portal Premium Key</label><input type="text" id="premium-key-link-kgs-portal" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>6. Unacademy Premium Key</label><input type="text" id="premium-key-link-unacademy" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>7. Vidyakul Premium Key</label><input type="text" id="premium-key-link-vidyakul" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>8. RWA Squad Premium Key</label><input type="text" id="premium-key-link-rwa" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>9. Study IQ Premium Key</label><input type="text" id="premium-key-link-studyiq" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>10. Mission Jeet Premium Key</label><input type="text" id="premium-key-link-mission-jeet" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>11. Selection Next Premium Key</label><input type="text" id="premium-key-link-selection-next" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>12. Careerwill Premium Key</label><input type="text" id="premium-key-link-careerwill" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>13. Science and Fun Premium Key</label><input type="text" id="premium-key-link-science-fun" placeholder="e.g. VIP-GROW123"></div>
+    <!-- New 12 Premium Keys -->
+    <div class="input-group"><label>14. GYAN BINDU Premium Key</label><input type="text" id="premium-key-link-gyan-bindu" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>15. AASH OFFICIAL Premium Key</label><input type="text" id="premium-key-link-aash" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>16. WINNER INSTITUTE Premium Key</label><input type="text" id="premium-key-link-winning" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>17. PARMAR ACADEMY Premium Key</label><input type="text" id="premium-key-link-farmar" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>18. LAKSHYA CLASSES Premium Key</label><input type="text" id="premium-key-link-lakshya" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>19. SAMYAK IAS Premium Key</label><input type="text" id="premium-key-link-samyak" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>20. KAUTILYA CLASSES Premium Key</label><input type="text" id="premium-key-link-kautilya" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>21. APNA COLLEGE Premium Key</label><input type="text" id="premium-key-link-apna" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>22. ALPHA INSTITUTE Premium Key</label><input type="text" id="premium-key-link-alpha" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>23. JOBS TARGET Premium Key</label><input type="text" id="premium-key-link-jobs" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>24. CDS JOURNEY Premium Key</label><input type="text" id="premium-key-link-cds" placeholder="e.g. VIP-GROW123"></div>
+    <div class="input-group"><label>25. TEXTBOOK Premium Key</label><input type="text" id="premium-key-link-textbook" placeholder="e.g. VIP-GROW123"></div>
+  </div>
+
+  <div class="sec">
+    <div class="s-tit">LOFI PLAYER SETTINGS</div>
+    <div class="input-group"><label>Lofi Title</label><input type="text" id="lofi-title" placeholder="Premium Lofi Mix"></div>
+    <div class="input-group"><label>Lofi Audio URL</label><input type="url" id="lofi-url" placeholder="https://example.com/lofi.mp3"></div>
+    <div class="input-group"><label>Source / Label</label><input type="text" id="lofi-source" placeholder="Admin Panel"></div>
+  </div>
+  
+  <button class="btn-save" style="margin-bottom: 20px;" onclick="saveAllSettings()"><i class="fa-solid fa-cloud-arrow-up"></i> Save All Settings</button>
+
+  <div class="sec">
+    <div class="s-tit">LOFI HISTORY</div>
+    <div id="song-list" class="song-list"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Settings Updated Successfully! 🎉</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyD0fBZb30QGmxEq5CuEvseFpkHkybktUTE",
+  authDomain: "infinity-62dbe.firebaseapp.com",
+  databaseURL: "https://infinity-62dbe-default-rtdb.firebaseio.com",
+  projectId: "infinity-62dbe",
+  storageBucket: "infinity-62dbe.firebasestorage.app",
+  messagingSenderId: "330384392129",
+  appId: "1:330384392129:web:c8f108e64580627a157940",
+  measurementId: "G-3YJ3DX37KM"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const songsRef = db.ref('lofi_songs');
+
+function changeTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('thm', t);
+  document.querySelector('.top-dark').classList.toggle('active', t === 'dark');
+  document.querySelector('.top-light').classList.toggle('active', t === 'light');
+}
+
+// Updated with all 25 institute keys
+const linkKeys = [
+  'link-pw-prime', 'link-pw-node2', 'link-pw-nexus', 'link-next-topper',
+  'link-kgs-portal', 'link-unacademy', 'link-vidyakul', 'link-rwa',
+  'link-studyiq', 'link-mission-jeet', 'link-selection-next',
+  'link-careerwill', 'link-science-fun',
+  'link-gyan-bindu', 'link-aash', 'link-winning', 'link-farmar',
+  'link-lakshya', 'link-samyak', 'link-kautilya', 'link-apna',
+  'link-alpha', 'link-jobs', 'link-cds', 'link-textbook'
+];
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+function showToast(msg){const toast=document.getElementById('toast');toast.textContent=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2500)}
+
+window.onload = function() {
+  changeTheme(localStorage.getItem('thm') || 'dark');
+
+  // Firebase se Links fetch karein
+  db.ref('institute_links').once('value').then(s => {
+    if(s.exists()){
+      const data = s.val();
+      linkKeys.forEach(k => { if(data[k]) document.getElementById(k).value = data[k]; });
+    }
+  });
+
+  // Firebase se 24h Keys fetch karein
+  db.ref('institute_keys').once('value').then(s => {
+    if(s.exists()){
+      const data = s.val();
+      linkKeys.forEach(k => { if(data[k]) document.getElementById('key-'+k).value = data[k]; });
+    }
+  });
+
+  // Firebase se Premium Keys fetch karein
+  db.ref('institute_premium_keys').once('value').then(s => {
+    if(s.exists()){
+      const data = s.val();
+      linkKeys.forEach(k => { if(data[k]) document.getElementById('premium-key-'+k).value = data[k]; });
+    }
+  });
+
+  // Firebase se App Settings fetch karein
+  db.ref('app_settings').once('value').then(s => {
+    if(s.exists()){
+      const data = s.val();
+      if(data.generateUrl) document.getElementById('setting-generate-url').value = data.generateUrl;
+      if(data.videoUrl) document.getElementById('setting-video-url').value = data.videoUrl;
+      
+      // Premium Links
+      if(data.premiumGenerateUrl) document.getElementById('setting-premium-generate-url').value = data.premiumGenerateUrl;
+      if(data.premiumVideoUrl) document.getElementById('setting-premium-video-url').value = data.premiumVideoUrl;
+      
+      // Social Links
+      if(data.telegramUrl) document.getElementById('setting-telegram-url').value = data.telegramUrl;
+      if(data.youtubeUrl) document.getElementById('setting-youtube-url').value = data.youtubeUrl;
+      if(data.instagramUrl) document.getElementById('setting-instagram-url').value = data.instagramUrl;
+    }
+  });
+
+  // Local lofi cache
+  const lofiTitle = localStorage.getItem('lofi_title');
+  const lofiUrl = localStorage.getItem('lofi_url');
+  const lofiSource = localStorage.getItem('lofi_source');
+  if (lofiTitle) document.getElementById('lofi-title').value = lofiTitle;
+  if (lofiUrl) document.getElementById('lofi-url').value = lofiUrl;
+  if (lofiSource) document.getElementById('lofi-source').value = lofiSource;
+
+  renderSongHistory();
+};
+
+function saveAllSettings() {
+  const updates = {};
+  const btn = document.querySelector('.btn-save');
+  btn.innerHTML = 'Saving...';
+  
+  // Links aur Keys collect karna
+  linkKeys.forEach(k => {
+    const linkVal = document.getElementById(k).value.trim();
+    const keyVal = document.getElementById('key-'+k).value.trim();
+    const premiumKeyVal = document.getElementById('premium-key-'+k).value.trim();
+    
+    updates[`institute_links/${k}`] = linkVal;
+    updates[`institute_keys/${k}`] = keyVal;
+    updates[`institute_premium_keys/${k}`] = premiumKeyVal; // Premium key node
+  });
+
+  // Global settings collect karna
+  updates['app_settings/generateUrl'] = document.getElementById('setting-generate-url').value.trim();
+  updates['app_settings/videoUrl'] = document.getElementById('setting-video-url').value.trim();
+  
+  updates['app_settings/premiumGenerateUrl'] = document.getElementById('setting-premium-generate-url').value.trim();
+  updates['app_settings/premiumVideoUrl'] = document.getElementById('setting-premium-video-url').value.trim();
+
+  updates['app_settings/telegramUrl'] = document.getElementById('setting-telegram-url').value.trim();
+  updates['app_settings/youtubeUrl'] = document.getElementById('setting-youtube-url').value.trim();
+  updates['app_settings/instagramUrl'] = document.getElementById('setting-instagram-url').value.trim();
+
+  // Lofi Settings
+  const title = document.getElementById('lofi-title').value.trim();
+  const url = document.getElementById('lofi-url').value.trim();
+  const source = document.getElementById('lofi-source').value.trim();
+
+  localStorage.setItem('lofi_title', title);
+  localStorage.setItem('lofi_url', url);
+  localStorage.setItem('lofi_source', source);
+
+  // Agar URL hai toh naya gaana add karo
+  if (url) {
+    const newSongRef = songsRef.push();
+    const song = {
+      title: title || 'Untitled Lofi',
+      url: url,
+      source: source || 'Admin Panel',
+      createdAt: Date.now()
+    };
+    updates[`lofi_songs/${newSongRef.key}`] = song;
+  }
+
+  // Final Save to Firebase
+  db.ref().update(updates)
+    .then(() => {
+      btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Save All Settings';
+      showToast('Settings Updated Successfully! 🎉');
+      renderSongHistory();
+    })
+    .catch((err) => {
+      btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Save All Settings';
+      alert('Firebase save failed: ' + err.message);
+    });
+}
+
+function renderSongHistory() {
+  songsRef.orderByChild('createdAt').on('value', snap => {
+    const box = document.getElementById('song-list');
+    box.innerHTML = '';
+    const data = snap.val() || {};
+    const arr = Object.entries(data).map(([id, s]) => ({id, ...s})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    if (!arr.length) {
+      box.innerHTML = '<div class="empty">No songs saved yet.</div>';
+      return;
+    }
+    arr.forEach(song => {
+      const div = document.createElement('div');
+      div.className = 'song-item';
+      div.innerHTML = `
+        <h3>${esc(song.title)}</h3>
+        <p>${esc(song.source)}</p>
+        <p style="margin-top:6px;color:var(--text)">${esc(song.url)}</p>
+        <div class="meta">
+          <span style="font-size:12px;color:var(--muted)">${song.createdAt ? new Date(song.createdAt).toLocaleString() : ''}</span>
+          <div class="song-actions">
+            <button class="btn-mini btn-use" onclick="useSong('${song.id}')">Use</button>
+            <button class="btn-mini btn-del" onclick="deleteSong('${song.id}')">Delete</button>
+          </div>
+        </div>`;
+      box.appendChild(div);
+    });
+  });
+}
+
+function useSong(id){
+  songsRef.child(id).once('value').then(s=>{
+    const song=s.val();
+    if(!song) return;
+    document.getElementById('lofi-title').value = song.title || '';
+    document.getElementById('lofi-url').value = song.url || '';
+    document.getElementById('lofi-source').value = song.source || '';
+    showToast('Song loaded into inputs');
+  });
+}
+
+function deleteSong(id){
+  if(!confirm('Delete this song from history?')) return;
+  songsRef.child(id).remove().then(()=>{
+    showToast('Song deleted');
+  });
+}
+</script>
+</body>
+</html>
